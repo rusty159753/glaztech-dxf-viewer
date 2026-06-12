@@ -44,7 +44,7 @@ Updating means bumping an npm version instead of merging a monorepo fork.
 ## Repo & architecture
 
 - New public repo: **`rusty159753/glaztech-dxf-viewer`**.
-- Local path: `C:\Users\christopher\glaztech-dxf-viewer`.
+- Local path: `C:\Users\christopher\Documents\GTI DXF Viewer`.
 - Vite + Vue 3 single-page app, modeled on upstream's `cad-viewer-example`
   package:
   - `@mlightcad/cad-viewer` (pinned **1.5.5**) renders the full viewer UI
