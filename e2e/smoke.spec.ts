@@ -21,3 +21,13 @@ test('opens a DXF file and shows the viewer canvas', async ({ page }) => {
     timeout: 30_000
   })
 })
+
+test('rejects a non-CAD file with an error message', async ({ page }) => {
+  await page.goto('/')
+  const input = page.locator('input[type="file"]')
+  await input.setInputFiles(path.resolve('e2e/fixtures/not-a-drawing.txt'))
+  await expect(
+    page.getByText('Please select a DWG or DXF file')
+  ).toBeVisible()
+  await expect(page.locator('canvas')).toHaveCount(0)
+})
