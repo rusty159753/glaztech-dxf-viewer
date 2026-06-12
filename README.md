@@ -22,9 +22,10 @@ no admin rights — everything runs in the browser; files never leave your PC.
    toolbar), click to place, type the note.
 5. **Add a dimension:** type `DIMLINEAR`, click the two points, then place
    the dimension line.
-6. **Print / share:** type `CPDF` to export a vector PDF.
-7. **Save for cutting:** use the main menu (☰) → Save to download the drawing
-   as DXF, including your notes and dimensions.
+6. **Print / share:** use **File → Export → Export to PDF** to download a
+   vector PDF.
+7. **Save for cutting:** type `CDXF` in the command line to download the
+   drawing as DXF, including your notes and dimensions.
 
 ## Development
 
