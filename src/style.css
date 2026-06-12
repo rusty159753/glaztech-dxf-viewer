@@ -1,0 +1,18 @@
+/* Glaz-Tech brand theme.
+   Primary blue #3182bf from glaztech.com; the light-N/dark-2 shades are the
+   standard Element Plus tint/shade steps computed from that primary. */
+:root {
+  --el-color-primary: #3182bf;
+  --el-color-primary-light-3: #6fa7d2;
+  --el-color-primary-light-5: #98c1df;
+  --el-color-primary-light-7: #c1daec;
+  --el-color-primary-light-8: #d6e6f2;
+  --el-color-primary-light-9: #eaf3f9;
+  --el-color-primary-dark-2: #276899;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
