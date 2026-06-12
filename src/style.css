@@ -16,3 +16,10 @@ body {
   margin: 0;
   padding: 0;
 }
+
+/* English-only build: hide the EN/中文 language switcher so coworkers can't
+   accidentally flip the UI into Chinese. */
+.ml-ribbon-language-switch,
+.ml-language-selector {
+  display: none !important;
+}

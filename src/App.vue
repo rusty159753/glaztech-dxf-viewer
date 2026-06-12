@@ -13,6 +13,7 @@
         :local-file="store.selectedFile"
         :mode="openMode"
         :base-url="cadDataBaseUrl"
+        @create="onViewerCreate"
       />
     </div>
   </div>
@@ -24,6 +25,7 @@ import { MlCadViewer } from '@mlightcad/cad-viewer'
 
 import GtiFileUpload from './components/GtiFileUpload.vue'
 import { store } from './store'
+import { applyGlaztechCustomizations } from './viewerCustomizations'
 
 // Write mode so office staff can add text notes and dimensions
 const openMode = AcEdOpenMode.Write
@@ -35,6 +37,14 @@ const cadDataBaseUrl = new URL('cad-data/', document.baseURI).href
 
 const handleFileSelect = (file: File) => {
   store.selectedFile = file
+}
+
+// Runs once the viewer is initialized. Installs Glaz-Tech behavior:
+// white-background printing, and "New Drawing" returning to the file picker.
+const onViewerCreate = () => {
+  applyGlaztechCustomizations(() => {
+    store.selectedFile = null
+  })
 }
 </script>
 
