@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.cache/
+public/cad-data/
+test-results/
+playwright-report/
+*.local
