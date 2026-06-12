@@ -43,7 +43,12 @@ const handleFileSelect = (file: File) => {
 // white-background printing, and "New Drawing" returning to the file picker.
 const onViewerCreate = () => {
   applyGlaztechCustomizations(() => {
-    store.selectedFile = null
+    // Full page reload back to the upload screen. Returning by toggling
+    // store.selectedFile would unmount MlCadViewer, and its onUnmounted calls
+    // AcApDocManager.destroy() which unloads the lazy export plugins
+    // (cpdf/csvg/chtml) without re-registering them on remount — that broke
+    // "Export to PDF" after New Drawing. A fresh load registers them cleanly.
+    window.location.reload()
   })
 }
 </script>

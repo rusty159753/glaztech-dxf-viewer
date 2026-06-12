@@ -40,6 +40,47 @@ test('New Drawing returns to the Glaz-Tech upload screen', async ({ page }) => {
   })
 })
 
+// Helper: File -> Export -> "Export to <type>" and return the download bytes.
+async function exportViaMenu(
+  page: import('@playwright/test').Page,
+  itemRe: RegExp
+) {
+  await page.locator('.ml-ribbon-tab--file').click()
+  await page.getByText('Export', { exact: false }).first().hover()
+  const downloadPromise = page.waitForEvent('download', { timeout: 90_000 })
+  await page.getByText(itemRe).click()
+  const download = await downloadPromise
+  const stream = await download.createReadStream()
+  const chunks: Buffer[] = []
+  for await (const c of stream) chunks.push(c as Buffer)
+  return Buffer.concat(chunks)
+}
+
+test('PDF export still works after a New Drawing cycle', async ({ page }) => {
+  // Regression: New Drawing reloads to the upload screen; the next viewer must
+  // re-register the lazy PDF plugin so "Export to PDF" doesn't 404 cpdf.
+  await openDrawing(page)
+  expect((await exportViaMenu(page, /export to pdf/i)).length).toBeGreaterThan(
+    1000
+  )
+
+  await page.locator('.ml-ribbon-tab--file').click()
+  await page.getByText('New Drawing', { exact: false }).click()
+  await expect(page.getByAltText('Glaz-Tech Industries')).toBeVisible({
+    timeout: 15_000
+  })
+
+  // Open again and export again — this is what was failing before the fix.
+  await page.locator('input[type="file"]').setInputFiles(SAMPLE)
+  await expect(page.locator('canvas').first()).toBeVisible({ timeout: 30_000 })
+  await expect(page.locator('.ml-ribbon-tab--file')).toBeVisible({
+    timeout: 30_000
+  })
+  expect((await exportViaMenu(page, /export to pdf/i)).length).toBeGreaterThan(
+    1000
+  )
+})
+
 test('SVG export uses a white background in dark mode', async ({ page }) => {
   await openDrawing(page)
   // File -> Export -> Export to SVG (csvg). Export submenu opens on hover.
